@@ -1,0 +1,14 @@
+router.post('/person',function(req,res){
+    const votingAge=req.query.votingAge;
+    const updatePerson=[];
+
+    persons.forEach((person)=>{
+        if (person.age>votingAge){
+            person.votingStatus=true;
+            updatePerson.push(person)
+        }
+    });
+    return res.send({updatedPerson:updatedPerson})
+});
+
+module.exports = router;
