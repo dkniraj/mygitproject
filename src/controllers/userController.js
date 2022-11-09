@@ -1,3 +1,4 @@
+const userModel = require("../models/userModel")
 const UserModel= require("../models/userModel")
 
 
@@ -44,9 +45,22 @@ const dummyTwo = function (req, res) {
     if (req.wantsJson) res.send({msg: "another example response"})
     else res.send("another example response")
 }
+const createUser=async function (req,res){
+    const{name,address,balance,gender,age}=req.body
+
+    const isFreeAppUser=req.isFreeAppUser
+
+    if(!name||!address||!balance||!gender||!age){
+        return res.send({message:'All field is mandatory'})
+    }
+
+    const userDetails=await userModel.create({name,address,balance,gender,age,isFreeAppUser})
+    return res.send({data:userDetails})
+}
 
 module.exports.createUser= createUser
 module.exports.getUsersData= getUsersData
 module.exports.basicCode= basicCode
 module.exports.dummyOne = dummyOne
 module.exports.dummyTwo = dummyTwo
+module.exports.createUser=createUser

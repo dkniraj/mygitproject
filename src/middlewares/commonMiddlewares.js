@@ -39,6 +39,19 @@ const myOtherMiddleware = function(req, res, next){
     }
     next()
 }
+const headerValidation=(req,res,next)=>{
+
+
+let isFreeAppUser=req.headers.isFreeAppUser
+
+if(!isFreeAppUser){
+    return res.send({message:"mandatory is not required"})
+}else {
+    isFreeAppUser=isFreeAppUser.toLowerCase()==='true'? true:false
+    req.isFreeAppUser=isFreeAppUser
+    next()
+}
+}
 
 module.exports.mid1= mid1
 module.exports.mid2= mid2
@@ -46,3 +59,4 @@ module.exports.mid3= mid3
 module.exports.mid4= mid4
 module.exports.myMiddleware = myMiddleware
 module.exports.myOtherMiddleware = myOtherMiddleware
+module.exports.headerValidation=headerValidation
