@@ -18,34 +18,16 @@ try {
 }
 
 const getblogs = async function (req,res){
-
     try {
-        
-        const authorID = req.query.author
-        const category = req.query.category
-        const tags = req.query.tags
-        const subcategory = req.query.subcategory
 
-        const filteredblogs = {}
-    
-        if (authorID){
-            filteredblogs.authorid = authorID
-        }
-        if (category){
-            filteredblogs.category = category
-        }
-        // if (tags){
-        //     filteredblogs.tags = tags
-        // }
-    
+        let data = req.query
+        data.isdeleted = false
+        data.isPublished=true
 
-        let blogs = await blogsmodel.find({isdeleted:false,isPublished:true})
+        let filtered = await blogsmodel.find(data).populate("authorid")
 
-        let Filter = await blogsmodel.find(filteredblogs||category)
-
-
-        if (filter){
-        return res.status(200).send ({msg: filter})
+        if (filtered){
+        return res.status(200).send ({msg: filtered})
 
         }else res.status(404).send ("data not found") 
         

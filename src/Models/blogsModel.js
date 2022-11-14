@@ -1,10 +1,6 @@
 
-const { default: mongoose, Mongoose } = require("mongoose");
-const { isDate } = require("util/types");
+const { default: mongoose } = require("mongoose");
 const ObjectId =mongoose.Schema.Types.ObjectId
-// const author = require("./authormodel")
-
-// const moment = re
 
 const blogsSchema = new mongoose.Schema({
     title : {type: String,
@@ -30,12 +26,9 @@ const blogsSchema = new mongoose.Schema({
     
     isdeleted : {type : Boolean, default:false},
 
-    // publishedAt :[Date],
+    publishedAt :{type:Date},
 
     isPublished : {type:Boolean,default:false}
-
-
-
 },
 {timestamps: true})
 
