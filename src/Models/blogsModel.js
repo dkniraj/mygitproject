@@ -1,10 +1,12 @@
 
-const { default: mongoose } = require("mongoose");
-const { boolean } = require("webidl-conversions");
+const { default: mongoose, Mongoose } = require("mongoose");
+const { isDate } = require("util/types");
 const ObjectId =mongoose.Schema.Types.ObjectId
 // const author = require("./authormodel")
 
-const blogsmodel = new mongoose.Schema({
+// const moment = re
+
+const blogsSchema = new mongoose.Schema({
     title : {type: String,
             required : true},
 
@@ -12,7 +14,7 @@ const blogsmodel = new mongoose.Schema({
             required:true},
 
     authorid: {type: ObjectId,
-            ref : author,
+            ref : "author",
             required : true },
 
     tags: {type: [String]}, 
@@ -24,13 +26,14 @@ const blogsmodel = new mongoose.Schema({
     subcategory: {type : [String],
         required: true},
 
-    deletedAt :{type:Date},
+    deletedAt : {type:Date},
     
-    isdeleted : {type : boolean, default:false},
+    isdeleted : {type : Boolean, default:false},
 
-    publishedAt : {type: Date},
+    // publishedAt :[Date],
 
-    isPublished : {type:boolean,default:false}
+    isPublished : {type:Boolean,default:false}
+
 
 
 },
@@ -38,4 +41,4 @@ const blogsmodel = new mongoose.Schema({
 
 
 
-module.exports = mongoose.model("Blogs" , blogsmodel)
+module.exports = mongoose.model("Blogs" , blogsSchema)

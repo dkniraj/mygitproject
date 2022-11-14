@@ -3,21 +3,25 @@ const blogsModel = require("../Models/blogsModel")
 
 
 
+
 let validation = async function(req,res,next){
     let authorid = req.body.authorid
 
-    let blogs = await blogsModel.create(blogsModel)
-
-    if (!authorid){
+try {
+     if (!authorid){
         return res.status(400).send({satus:false, msg: " authorid is not present"})
     }  
     
-    if (!mongoose.SchemaType.ObjectId.isValid(authorid)){
-        return res.send.status(400).send({satus:false, msg: "authorid is not valid"})
+    if (!mongoose.Types.ObjectId.isValid(authorid)){
+        return res.status(400).send({satus:false, msg: "authorid is not valid"})
     }
 
-    res.send 
-
-
+    next()
+} catch (error) {
+    res.status(500).send({msg: error.message})
+}
+   
 
 }
+
+module.exports.validation = validation
