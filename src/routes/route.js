@@ -13,6 +13,7 @@ router.post("/authors",authorcontroller.createauthor)
 router.post("/createblogs",Middleware.validation,blogsController.createblogs)
 
 router.get("/getblogs",blogsController.getblogs)
+router.put("/updatedblogs",blogsController.updatedblogs)
 
 
 
