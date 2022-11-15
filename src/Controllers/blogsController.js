@@ -4,9 +4,19 @@ const blogsmodel = require("../Models/blogsModel")
 const createblogs = async function (req,res){
 try {
     let data = req.body 
-    let title = req.body.title
+    let {title,body,authorId,category } = data;
     if (!title){
         res.status(400).send({status:false ,msg:"tittle is required"})
+    }
+    if (!body){
+        res.status(400).send({status:false ,msg:"Body is required for blog"})
+    }
+    if (!authorId){
+        res.status(400).send({status:false ,msg:"authorId is required"})
+    }
+
+    if (!category){
+        res.status(400).send({status:false ,msg:"category is required"})
     }
     let blog = await blogsmodel.create(data)
 

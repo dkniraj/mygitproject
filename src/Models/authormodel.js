@@ -3,7 +3,7 @@ const { default: mongoose } = require("mongoose");
 
 
 
-const authormodel = new mongoose.Schema({
+const authorSchema = new mongoose.Schema({
     fname : {type: String,
             required : true},
 
@@ -29,4 +29,4 @@ const authormodel = new mongoose.Schema({
 
 
 
-module.exports = mongoose.model("author" , authormodel)
+module.exports = mongoose.model("author" , authorSchema)
