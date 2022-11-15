@@ -13,7 +13,14 @@ router.post("/authors",Middleware.authorvalidation,authorcontroller.createauthor
 router.post("/createblogs",Middleware.validation,blogsController.createblogs)
 
 router.get("/getblogs",blogsController.getblogs)
-router.put("/updatedblogs",blogsController.updatedblogs)
+
+router.put("/updatedblogs/:blogId",blogsController.updatedblogs)
+
+router.delete("/deleted/:blogId",blogsController.deleted)
+
+router.delete("/deleteblogs",blogsController.deleteblogs)
+
+
 
 
 
