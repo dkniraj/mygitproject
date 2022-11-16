@@ -3,9 +3,11 @@ const blogsmodel = require("../Models/blogsModel")
 
 
 const createblogs = async function (req,res){
+
 try {
     let data = req.body 
     let title = req.body.title
+
     if (!title){
         res.status(400).send({status:false ,msg:"tittle is required"})
     }
@@ -46,9 +48,11 @@ const updatedblogs = async function (req, res) {
             return res.status(400).send({ status: false, msg: 'Enter blog Details' })
         if (!blogId)
             return res.status(400).send({ status: false, msg: 'BlogId is missing' })
+
         let findBlogId = await blogsModel.findById(blogId);
+
         if (findBlogId.isdeleted == true) {
-            return res.status(400).send({ status: false, msg: "Blogs are deleted" })
+            return res.status(400).send({ status: false, msg: "Blog is  deleted" })
 
         }
         let updatedblogs = await blogsModel.findOneAndUpdate({ _id: blogId }, {
@@ -63,6 +67,7 @@ const updatedblogs = async function (req, res) {
             { new: true, upsert: true },
         );
         return res.status(200).send({ status: true, msg: updatedblogs });
+        
     } catch (err) {
         res.status(500).send({ status: false, msg: err.message })
     }
@@ -93,44 +98,67 @@ const deleted = async function (req,res){
             { new: true, upsert: true },
         );
 
-        return res.status(200)
+        return res.status(200).send({status:true,Msg: "deleted succesfully"})
         
     } catch (err) {
         res.status(500).send({ status: false, msg: err.message })
     }
 }
 
-const deleteblogs = async function (req,res){
+// const deleteblogs = async function (req,res){
 
-    try {
+//     try {
 
-        let {authorid,category,tags,subcategory} = req.query
+//         let {authorid,category,tags,subcategory} = req.query
 
-        let data = req.query
+//         let data = req.query
 
-        if (!data){
-        return res.status(400).send({ status: false, msg: 'queries are missing' })}
+//         if (!data){
+//         return res.status(400).send({ status: false, msg: 'queries are missing' })}
 
-        const Blogs = await blogsModel.find({$or:[{category : category} , {subcategory : subcategory} ,{tags:tags}, {_id : authorid}] ,isDeleted : true })
+//         const Blogs = await blogsModel.find({$or:[{category : category} , {subcategory : subcategory} ,{tags:tags}, {_id : authorid}] ,isDeleted : true })
 
-        if ( Blogs.length > 0){
-            return res.status(404).send({status : false , message : 'allready deleted'})
-        }
+//         if ( Blogs.length == 0){
+//             return res.status(404).send({status : false , message : 'already deleted'})
+//         }
 
-        await blogsModel.updateMany({$or:[{category : category} , {subcategory : subcategory} ,{tags:tags }, {_id : authorid}] , isDeleted : false} , {$set :{isDeleted : true, deletedAt : new Date()}} ,{new : true}  )
+//         await blogsModel.updateMany({$or:[{category : category}, {subcategory : subcategory} ,{tags:tags }, {_id : authorid}] , isDeleted : false} , {$set :{isDeleted : true, deletedAt : new Date()}} ,{new : true}  )
        
-        res.status(200).send({status :true , msg : 'Deleted successfully'}) 
+//         res.status(200).send({status :true , msg : 'Deleted successfully'}) 
 
-        } catch (error) {
-            res.status(500).send({ msg: error.message })
-        }
-    }
+//         } catch (error) {
+//             res.status(500).send({ msg: error.message })
+//         }
+//     }
     
+const DeleteBlogsByQuery = async function (req, res) {
 
+try {
+      let data = req.query;
+      if (Object.keys(data).length == 0) {
+        return res.status(400).send({ status: false, msg: "query is required" });}
+        
+
+      const deleteData = await blogsModel.updateMany(
+        { $and: [data, { isdeleted: false }]},
+        { $set: { isdeleted: true ,deletedAt : new Date()}}
+      );
+
+    if (deleteData.modifiedCount == 0)
+        return res.status(404).send({ status: false, msg: "No blog are found for Update" });
+  
+    res.status(200).send({status: true,deleteData});
+
+    } catch (error) {
+      res.status(500).send({ status: false, msg: error.message });
+    }
+  };
+  
+      
 
 module.exports.createblogs = createblogs
 module.exports.getblogs = getblogs
 module.exports.updatedblogs = updatedblogs
 module.exports.deleted = deleted
-module.exports.deleteblogs = deleteblogs
+module.exports.DeleteBlogByQuery = DeleteBlogsByQuery
 
