@@ -8,7 +8,7 @@ const Middleware = require("../Middlewares/validation")
 
 
 
-router.post("/authors",authorcontroller.createauthor)
+router.post("/authors",Middleware.authorvalidation,authorcontroller.createauthor)
 
 router.post("/createblogs",Middleware.validation,blogsController.createblogs)
 
