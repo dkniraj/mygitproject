@@ -21,7 +21,7 @@ router.put("/updatedblogs/:blogId",Middleware2.Authentication,Middleware2.Author
 
 router.delete("/deleted/:blogId",Middleware2.Authentication,Middleware2.Authorization,blogsController.deleted)
 
-router.delete("/deleteblogs",blogsController.DeleteBlogByQuery)
+router.delete("/deleteblogs",Middleware2.Authentication,Middleware2.Authorization,blogsController.DeleteBlogByQuery)
 
 
 
