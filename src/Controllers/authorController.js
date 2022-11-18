@@ -35,7 +35,7 @@ try {
 
     res.setHeader("x-api-key",token)
 
-    res.status(200).send({status : true, token : token })
+    res.status(200).send({status : true, data : token })
 
 } catch (error) {
 
