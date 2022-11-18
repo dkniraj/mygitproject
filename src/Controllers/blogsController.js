@@ -47,14 +47,14 @@ const updatedblogs = async function (req, res) {
         let blogId = req.params.blogId;
 
         if (Object.keys(dataa).length == 0)
-            return res.status(400).send({ status: false, msg: 'Enter blog Details' })
+            return res.status(404).send({ status: false, msg: 'Enter blog Details' })
         if (!blogId)
-            return res.status(400).send({ status: false, msg: 'BlogId is missing' })
+            return res.status(404).send({ status: false, msg: 'BlogId is missing' })
 
         let findBlogId = await blogsModel.findById(blogId);
 
         if (findBlogId.isdeleted == true) {
-            return res.status(400).send({ status: false, msg: "Blog is deleted" })
+            return res.status(404).send({ status: false, msg: "Blog is deleted" })
 
         }
         let updatedblogs = await blogsModel.findOneAndUpdate({ _id: blogId }, {
@@ -81,14 +81,14 @@ const deleted = async function (req,res){
         let blogId = req.params.blogId;
 
         if (!blogId)
-            return res.status(400).send({ status: false, msg: 'BlogId is missing' })
+            return res.status(404).send({ status: false, msg: 'BlogId is missing' })
     
         let blog = await blogsModel.findById({_id:blogId})
 
         if(!blog){return res.status(404).send({ status: false, msg: "Blogid dont exit" })}
 
         if (blog.isdeleted==true) {
-            return res.status(400).send({ status: false, msg: "Blogs is already deleted" })
+            return res.status(404).send({ status: false, msg: "Blogs is already deleted" })
         }
         
         await blogsModel.findOneAndUpdate({ _id: blogId }, {
@@ -116,7 +116,7 @@ try {
       
       if (Object.keys(dataa).length == 0) {
 
-        return res.status(400).send({ status: false, msg: "query is required" });}
+        return res.status(404).send({ status: false, msg: "query is required" });}
 
       const deleteData = await blogsModel.updateMany(
         { $and: [dataa, { isdeleted: false }] },
