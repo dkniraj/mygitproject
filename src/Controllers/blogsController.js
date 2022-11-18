@@ -117,13 +117,6 @@ try {
       if (Object.keys(data).length == 0) {
 
         return res.status(400).send({ status: false, msg: "query is required" });}
-        
-        // let filtered = await blogsmodel.find(data).populate("authorid")
-
-        // if(filtered.length == 0){res.status(404).send("not find")}
-
-        // let ID = filtered[0].authorid
-
 
       const deleteData = await blogsModel.updateMany(
         { $and: [data, { isdeleted: false }] },
