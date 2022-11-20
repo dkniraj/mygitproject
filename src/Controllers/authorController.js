@@ -6,10 +6,10 @@ const createauthor = async function (req,res){
 
     try {
         
-        let data = req.body;
-        let newdata = await authormodel.create(data);
+        let dataa = req.body;
+        let newdata = await authormodel.create(dataa);
     
-        res.status(201).send ({msg: newdata})
+        res.status(201).send ({status:true, data: newdata})
     } 
     catch (error) {
         res.status(500).send({msg:error.message})
@@ -35,7 +35,7 @@ try {
 
     res.setHeader("x-api-key",token)
 
-    res.status(200).send({status : true, token : token })
+    res.status(200).send({statu : true, token : token })
 
 } catch (error) {
 
