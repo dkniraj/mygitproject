@@ -10,7 +10,7 @@ try {
 
     let blog = await blogsmodel.create(data)
 
-    return res.status(201).send({status: true , msg: blog})
+    return res.status(201).send({status: true , data: blog})
 
     } catch (error) {
         res.status(500).send({ msg: error.message })
@@ -68,7 +68,7 @@ const updatedblogs = async function (req, res) {
         },
             { new: true, upsert: true },
         );
-        return res.status(200).send({ status: true, msg: updatedblogs });
+        return res.status(200).send({ status: true, data: updatedblogs });
         
     } catch (err) {
         res.status(500).send({ status: false, msg: err.message })
@@ -118,7 +118,7 @@ try {
 
         return res.status(400).send({ status: false, msg: "query is required" });}
         
-        // let filtered = await blogsmodel.find(data).populate("authorid")
+        // let filtered = await blogsmodel.find($and{data,})
 
         // if(filtered.length == 0){res.status(404).send("not find")}
 
@@ -129,6 +129,7 @@ try {
         { $and: [data, { isdeleted: false }] },
         { $set: { isdeleted: true ,deletedAt : new Date()}}
       );
+
 
     if (deleteData.modifiedCount == 0)
         return res.status(404).send({ status: false, msg: "No blog are found for Update" });

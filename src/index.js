@@ -11,7 +11,6 @@ app.use (bodyParser.urlencoded({extended : true}))
 
 
 mongoose.connect("mongodb+srv://vishwasw75:9595335675@firstcluster.jde07cq.mongodb.net/First_Project",{useNewUrlparser: true})
-
 .then (()=> console.log("MongoDb is connected "))
 .catch(err => console.log(err))
 

@@ -21,14 +21,11 @@ const Authentication = function (req,res,next){
 
     // return res.status(400).send({status:false,msg:"Token is invalid"})
 
-    jwt.verify(token,"lithiumproject1",(err, decode) => {if (err) {let msg = err.message === "jwt expired"? "Token is expired": "Token is invalid"
+     jwt.verify(token,"lithiumproject1",(err, decode) => {if (err) {let msg = err.message === "jwt expired"? "Token is expired": "Token is invalid"
             return res.status(400).send({ status: false, message: msg })
           }
-
           req.decode = decode
-          
         })
-
         
     next();
 

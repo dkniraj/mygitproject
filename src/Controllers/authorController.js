@@ -31,11 +31,11 @@ try {
 
     if (!authordata) return res.status(404).send({status:false,msg:"author not found"})
 
-    let token = jwt.sign({authorid:authordata._id.toString(),team : "breakoutroom 19"}, "lithiumproject1");
+    let token = jwt.sign({authorid:authordata._id.toString(),team : "breakoutroom 19"},"lithiumproject1");
 
     res.setHeader("x-api-key",token)
 
-    res.status(200).send({statu : true, token : token })
+    res.status(200).send({status : true, token : token })
 
 } catch (error) {
 
