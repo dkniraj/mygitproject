@@ -140,3 +140,15 @@ module.exports.updatedblogs = updatedblogs
 module.exports.deleted = deleted
 module.exports.DeleteBlogByQuery = DeleteBlogsByQuery
 
+
+
+
+const createblogs=async function(req,res){
+{
+    let data=req.body
+    let blogs=await blogsmodels.create(data)
+    return res.status(201).send({status:true, msg:blog})
+}catch (err){
+    return res
+}
+}
